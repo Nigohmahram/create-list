@@ -1,0 +1,12 @@
+.app {
+	text-align: center;
+	height: 100vh;
+	color: black;
+}
+
+.content {
+	max-width: 1000px;
+	background-color: #fff;
+	margin: 0 auto;
+	padding: 5rem 0;
+}
