@@ -14,10 +14,20 @@ class MoviesAddForm extends Component {
 			[e.target.name]: e.target.value,
 		});
 	};
+
+	addFormHandler = e => {
+		e.preventDefault();
+		this.props.addForm({ name: this.state.name, viewers: this.state.views });
+		this.setState({
+			name: '',
+			views: '',
+		});
+	};
+
 	render() {
 		const { name, views } = this.state;
 		return (
-			<div className='app-add-form'>
+			<div className='app-add-form' onSubmit={this.addFormHandler}>
 				<h3>새 영화 추가</h3>
 				<form className='add-form d-flex'>
 					<input
