@@ -6,9 +6,9 @@ import MovieList from '../movie-list/movie-list';
 import MoviesAddForm from '../movies-add-form/movies-add-form';
 const App = () => {
 	const data = [
-		{ name: '해운데', viewers: 988, favourite: false },
-		{ name: '우리 사랑', viewers: 910, favourite: false },
-		{ name: '동네 싸움', viewers: 1016, favourite: true },
+		{ name: '해운데', viewers: 988, favourite: false, id: 1 },
+		{ name: '우리 사랑', viewers: 910, favourite: false, id: 2 },
+		{ name: '동네 싸움', viewers: 1016, favourite: true, id: 3 },
 	];
 	return (
 		<div className='app font-monospace'>
