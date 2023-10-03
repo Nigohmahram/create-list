@@ -3,18 +3,19 @@ import './search-panel.css';
 
 const SearchPanel = props => {
 	const [term, setTerm] = useState('');
-	const updataTermHandle = e => {
+
+	const updateTermHandler = e => {
 		const term = e.target.value.toLowerCase();
 		setTerm(term);
-		props.updataTermHandle(term);
+		props.updateTermHandler(term);
 	};
 
 	return (
 		<input
 			type='text'
-			className='form-control search-input align-center'
-			placeholder='영화 검색'
-			onChange={updataTermHandle}
+			className='form-control search-input'
+			placeholder='Kinolarni qidirish'
+			onChange={updateTermHandler}
 			value={term}
 		/>
 	);
