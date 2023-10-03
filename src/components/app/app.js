@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import AppInfo from '../app-info/app-info';
 import SearchPanel from '../search-panel/search-panel';
 import AppFilter from '../app-filter/app-filter';
 import MovieList from '../movie-list/movie-list';
 import MoviesAddForm from '../movies-add-form/movies-add-form';
 import { v4 as uuidv4 } from 'uuid';
+import { Context } from '../../context';
 
 import './app.css';
 
@@ -13,6 +14,7 @@ const App = () => {
 	const [term, setTerm] = useState('');
 	const [filter, setFilter] = useState('all');
 	const [isLoading, setIsLoading] = useState(false);
+	const { state, dispetch } = useContext(Context);
 
 	const onDelete = id => {
 		const newArr = data.filter(c => c.id !== id);
@@ -77,6 +79,7 @@ const App = () => {
 					like: false,
 				}));
 				setData(newArr);
+				dispetch({ type: 'GET_DATA', payload: newArr });
 			})
 			.catch(err => console.log(err))
 			.finally(() => setIsLoading(false));
