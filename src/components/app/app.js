@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AppInfo from '../app-info/app-info';
 import SearchPanel from '../search-panel/search-panel';
 import AppFilter from '../app-filter/app-filter';
@@ -8,10 +8,10 @@ import { v4 as uuidv4 } from 'uuid';
 import './app.css';
 
 const App = () => {
-	const [data, setData] = useState(arr);
+	const [data, setData] = useState([]);
 	const [term, setTerm] = useState('');
-	const [filter, setFilter] = useState('');
-
+	const [filter, setFilter] = useState('all');
+	const [isLoading, setIsLoading] = useState(false);
 	const onDelete = id => {
 		const newArr = data.filter(c => c.id !== id);
 		setData(newArr);
@@ -53,6 +53,24 @@ const App = () => {
 	const updataTermHandle = term => setTerm(term);
 	const updateFilterHanler = filter => setFilter(filter);
 
+	useEffect(() => {
+		setIsLoading(false);
+		fetch('https://jsonplaceholder.typicode.com/todos/?_start=0&_limit=10')
+			.then(response => response.json())
+			.then(json => {
+				const newArr = json.map(item => ({
+					name: item.title,
+					id: item.id,
+					viewers: item.id * 10,
+					favourite: false,
+					like: false,
+				}));
+				setData(newArr);
+			})
+			.catch(err => console.log(err))
+			.finally(() => setIsLoading(true));
+	});
+
 	return (
 		<div className='app font-monospace'>
 			<div className='content'>
@@ -61,6 +79,7 @@ const App = () => {
 					<SearchPanel updataTermHandle={updataTermHandle} />
 					<AppFilter filter={filter} updateFilterHanler={updateFilterHanler} />
 				</div>
+				{isLoading && 'Loading...'}
 				<MovieList onToggleProp={onToggleProp} data={filterHandler(searchHandler(data, term), filter)} onDelete={onDelete} />
 				<MoviesAddForm addForm={addForm} />
 			</div>
@@ -176,8 +195,8 @@ const App = () => {
 // }
 export default App;
 
-const arr = [
-	{ name: '해운데', viewers: 988, favourite: false, like: false, id: 1 },
-	{ name: '우리 사랑', viewers: 789, favourite: false, like: true, id: 2 },
-	{ name: '동네 싸움', viewers: 1016, favourite: true, like: false, id: 3 },
-];
+// const  = [
+// 	{ name: '해운데', viewers: 988, favourite: false, like: false, id: 1 },
+// 	{ name: '우리 사랑', viewers: 789, favourite: false, like: true, id: 2 },
+// 	{ name: '동네 싸움', viewers: 1016, favourite: true, like: false, id: 3 },
+// ];
