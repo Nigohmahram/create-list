@@ -1,9 +1,14 @@
+import { useContext } from 'react';
+import { Context } from '../../context';
 import './app-info.scss';
-const AppInfo = ({ allMoviesCount, favouriteMoviesCount }) => {
+
+const AppInfo = ({ allMoviesCount, favouriteMovieCount }) => {
+	const { state } = useContext(Context);
+
 	return (
 		<div className='app-info'>
-			<p className='fs-3 text-uppercase'>모든 영화 번호: {allMoviesCount}</p>
-			<p className='fs-4 text-uppercase'>좋아하는 영화: {favouriteMoviesCount}</p>
+			<p className='fs-3 text-uppercase'>Barcha kinolar soni: {state.data.length}</p>
+			<p className='fs-4 text-uppercase'>Sevimli film: {state.data.filter(c => c.favourite).length}</p>
 		</div>
 	);
 };

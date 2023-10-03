@@ -1,6 +1,12 @@
-import './movie-list.css';
 import MovieListItem from '../movie-list-item/movie-list-item';
-const MovieList = ({ data, onDelete, onToggleProp }) => {
+import { useContext } from 'react';
+import { Context } from '../../context';
+import { filterHandler, searchHandler } from '../../utilites/data';
+import './movie-list.css';
+
+const MovieList = ({ onDelete, onToggleProp }) => {
+	const { state, dispetch } = useContext(Context);
+	const data = filterHandler(searchHandler(state.data, state.term), state.filter);
 	return (
 		<ul className='movie-list'>
 			{data.map(item => (
@@ -10,7 +16,7 @@ const MovieList = ({ data, onDelete, onToggleProp }) => {
 					viewers={item.viewers}
 					favourite={item.favourite}
 					like={item.like}
-					onDelete={() => onDelete(item.id)}
+					id={item.id}
 					onToggleProp={e => onToggleProp(item.id, e.currentTarget.getAttribute('data-toggle'))}
 				/>
 			))}
